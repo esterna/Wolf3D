@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 01:24:57 by esterna           #+#    #+#             */
-/*   Updated: 2017/10/26 19:05:54 by esterna          ###   ########.fr       */
+/*   Updated: 2017/10/26 21:25:00 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 # define WIN_X				1280
 # define WIN_Y				1024
+# define FOV				M_PI / 4.0
 
 typedef struct				s_keys
 {
@@ -56,7 +57,7 @@ typedef struct				s_frame
 	t_keys		keys;
 }							t_frame;
 
-int				collision(double ray_x, double ray_y, double dx, double dy, t_frame *frame, int n);
+int				collision(double dx, double dy, t_frame *frame);
 
 int				key_pressed(int keycode, t_frame *frame);
 
