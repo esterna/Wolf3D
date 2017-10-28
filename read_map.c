@@ -6,47 +6,54 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:49:03 by esterna           #+#    #+#             */
-/*   Updated: 2017/10/25 22:44:11 by esterna          ###   ########.fr       */
+/*   Updated: 2017/10/27 17:17:48 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
+void			set_curr_pos(t_frame *frame, int x, int y)
+{
+	frame->curr_pos.y = (64.0 * (double)(y - 1)) + 32.0;
+	frame->curr_pos.x = (64.0 * (double)(x - 1)) + 32.0;
+	frame->map[y][x] = 0;
+}
+
+static void		utility(t_frame *frame, int y, int fd, char *line)
+{
+	int		x;
+
+	x = 0;
+	while (*line != '\0')
+	{
+		if (*line == 'X')
+			set_curr_pos(frame, x, y);
+		else
+		{
+			if (!('0' <= *line && *line <= '9'))
+			{
+				close(fd);
+				wolf_exit(frame, -2);
+			}
+			frame->map[y][x] = *line - '0';
+		}
+		line++;
+		x++;
+	}
+}
+
 void			fill_map(t_frame *frame, char *file)
 {
 	char		*line;
-	char		*tmp;
 	int			fd;
-	int			x;
 	int			y;
 
 	if ((fd = open(file, O_RDONLY)) < 1)
 		wolf_exit(frame, -1);
-	frame->map = ft_2dintnew(frame->map_y, frame->map_x);
 	y = 0;
 	while (get_next_line(fd, &line) > 0)
 	{
-		x = 0;
-		tmp = line;
-		while (*tmp != '\0')
-		{
-			if (*tmp == 'X')
-			{
-				frame->curr_pos[0] = (64.0 * (double)(y - 1)) + 32.0;
-				frame->curr_pos[1] = (64.0 * (double)(x - 1)) + 32.0;
-				frame->map[y][x] = 0;
-				tmp++;
-				x++;
-			}
-			if (!('0' <= *tmp && *tmp <= '9'))
-			{
-				ft_free_array((void **)frame->map, frame->map_y);
-				wolf_exit(frame, -1);
-			}
-			frame->map[y][x] = *tmp - '0';
-			tmp++;
-			x++;
-		}
+		utility(frame, y, fd, line);
 		y++;
 		ft_strdel(&line);
 	}
@@ -72,5 +79,8 @@ void			read_map(t_frame *frame, char *file)
 		ft_strdel(&line);
 	}
 	close(fd);
+	frame->map = ft_2dintnew(frame->map_y, frame->map_x);
 	fill_map(frame, file);
+	if (frame->curr_pos.x == -1.0 || frame->curr_pos.y == -1.0)
+		wolf_exit(frame, -2);
 }

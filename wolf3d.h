@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 01:24:57 by esterna           #+#    #+#             */
-/*   Updated: 2017/10/26 21:25:00 by esterna          ###   ########.fr       */
+/*   Updated: 2017/10/27 17:20:03 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define WIN_X				1280
 # define WIN_Y				1024
 # define FOV				M_PI / 4.0
+# define DIS_TO_PR			(WIN_X / 2.0) / tan(FOV / 2.0)
 
 typedef struct				s_keys
 {
@@ -33,8 +34,14 @@ typedef struct				s_keys
 	int			d;
 	int			q;
 	int			e;
-}
-							t_keys;
+}							t_keys;
+
+typedef struct				s_point
+{
+	double		x;
+	double		y;
+	double		z;
+}							t_point;
 
 typedef struct				s_frame
 {
@@ -46,29 +53,34 @@ typedef struct				s_frame
 	int			map_x;
 	int			map_y;
 	int			**map;
-	double		curr_pos[2];
+	t_point		curr_pos;
 	double		view_point;
-	double		ray[2];
-	double		distance[2];
-	double		dis_to_pr;
+	t_point		ray;
+	t_point		distance;
 	double		wall_cons;
 	double		dx;
 	double		dy;
 	t_keys		keys;
 }							t_frame;
 
-int				collision(double dx, double dy, t_frame *frame);
+int							collision(double dx, double dy, t_frame *frame);
 
-int				key_pressed(int keycode, t_frame *frame);
+void						draw_wall(t_frame *frame, int x, double angle);
 
-int				key_released(int keycode, t_frame *frame);
+void						floor_ceil(t_frame *frame);
 
-void			ray_caster(t_frame *frame);
+int							get_color(t_frame *frame, double angle);
 
-void			read_map(t_frame *frame, char *file);
+int							key_pressed(int keycode, t_frame *frame);
 
-int				start(t_frame *frame);
+int							key_released(int keycode, t_frame *frame);
 
-void			wolf_exit(t_frame *frame, int i);
+void						ray_caster(t_frame *frame);
+
+void						read_map(t_frame *frame, char *file);
+
+int							start(t_frame *frame);
+
+void						wolf_exit(t_frame *frame, int i);
 
 #endif

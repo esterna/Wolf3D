@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 01:23:02 by esterna           #+#    #+#             */
-/*   Updated: 2017/10/26 15:27:41 by esterna          ###   ########.fr       */
+/*   Updated: 2017/10/27 17:18:39 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,15 @@
 
 void			wolf_exit(t_frame *frame, int i)
 {
-	if (i == 3)
+	if (i == -1 || i == -2 || i == 3)
 	{
+		if (i == -2)
+			ft_free_array((void **)frame->map, frame->map_y);
 		free(frame);
-		printf("usage: ./wolf3d map_name\n");
-		exit(0);
-	}
-	if (i == -1)
-	{
-		free(frame);
-		printf("Error: Invalid Map File\n");
+		if (i == -1 || i == -2)
+			printf("Error: Invalid Map File\n");
+		else
+			printf("usage: ./wolf3d map_name\n");
 		exit(0);
 	}
 	ft_free_array((void **)frame->map, frame->map_y);
@@ -41,8 +40,7 @@ void			frame_init(t_frame *frame)
 	int		endian;
 
 	frame->redraw = 1;
-	frame->view_point = M_PI / 4.0;
-	frame->dis_to_pr = (WIN_X / 2.0) / tan(30.0 * (M_PI / 180.0));
+	frame->view_point = 0.0;
 	frame->mlx = mlx_init();
 	frame->window = mlx_new_window(frame->mlx, WIN_X, WIN_Y, "Wolf3D");
 	frame->image = (int *)mlx_new_image(frame->mlx, WIN_X, WIN_Y);
@@ -69,14 +67,15 @@ int				main(int argc, char **argv)
 	frame = (t_frame *)malloc(sizeof(t_frame));
 	if (argc != 2)
 		wolf_exit(frame, 3);
+	frame->curr_pos.x = -1.0;
+	frame->curr_pos.y = -1.0;
 	read_map(frame, *(argv + 1));
 	frame_init(frame);
-//	system("afplay Electric_Daisy_Lindsey_Stirling.mp3 &");
+	system("afplay Electric_Daisy_Lindsey_Stirling.mp3 &");
 	mlx_hook(frame->window, 2, 0, key_pressed, frame);
 	mlx_hook(frame->window, 3, 0, key_released, frame);
 	mlx_hook(frame->window, 17, 0, exit_hook, frame);
 	mlx_loop_hook(frame->mlx, start, frame);
 	mlx_loop(frame->mlx);
-//	ray_caster(frame);
 	return (0);
 }
