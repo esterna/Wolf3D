@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 18:58:23 by esterna           #+#    #+#             */
-/*   Updated: 2017/10/27 17:25:52 by esterna          ###   ########.fr       */
+/*   Updated: 2017/10/27 17:37:11 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,6 @@ void				left_right(t_frame *frame)
 int					start(t_frame *frame)
 {
 	t_keys		k_tmp;
-	double		dx;
-	double		dy;
 
 	k_tmp = frame->keys;
 	if (k_tmp.w == 1 || k_tmp.s == 1)
