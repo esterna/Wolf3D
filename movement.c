@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 18:58:23 by esterna           #+#    #+#             */
-/*   Updated: 2017/10/27 17:37:11 by esterna          ###   ########.fr       */
+/*   Updated: 2017/10/27 19:51:10 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,20 @@ int					collision(double dx, double dy, t_frame *frame)
 {
 	int		x;
 	int		y;
+	double	pos_x;
+	double	pos_y;
 
-	frame->curr_pos.y += dy;
-	frame->curr_pos.x += dx;
-	y = (int)(frame->curr_pos.y / 64.0);
-	x = (int)(frame->curr_pos.x / 64.0);
+	pos_y = frame->curr_pos.y;
+	pos_x = frame->curr_pos.x;
+	pos_y += dy;
+	pos_x += dx;
+	y = (int)(pos_y / 64.0);
+	x = (int)(pos_x / 64.0);
 	if (!(0 <= y && y < frame->map_y && 0 <= x &&
 				x < frame->map_x) || frame->map[y][x] != 0)
 		return (0);
+	frame->curr_pos.y += dy;
+	frame->curr_pos.x += dx;
 	return (1);
 }
 
@@ -77,10 +83,12 @@ void				left_right(t_frame *frame)
 	}
 }
 
-int					start(t_frame *frame)
+int					start(void *fr_tmp)
 {
 	t_keys		k_tmp;
-
+	t_frame		*frame;
+	
+	frame = (t_frame *)fr_tmp;
 	k_tmp = frame->keys;
 	if (k_tmp.w == 1 || k_tmp.s == 1)
 		up_down(frame);

@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 01:24:57 by esterna           #+#    #+#             */
-/*   Updated: 2017/10/27 17:20:03 by esterna          ###   ########.fr       */
+/*   Updated: 2017/10/27 19:42:25 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,15 @@ void						floor_ceil(t_frame *frame);
 
 int							get_color(t_frame *frame, double angle);
 
-int							key_pressed(int keycode, t_frame *frame);
+int							key_pressed(int keycode, void *fr_tmp);
 
-int							key_released(int keycode, t_frame *frame);
+int							key_released(int keycode, void *fr_tmp);
 
 void						ray_caster(t_frame *frame);
 
 void						read_map(t_frame *frame, char *file);
 
-int							start(t_frame *frame);
+int							start(void *fr_tmp);
 
 void						wolf_exit(t_frame *frame, int i);
 

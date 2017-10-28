@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 01:23:02 by esterna           #+#    #+#             */
-/*   Updated: 2017/10/27 17:18:39 by esterna          ###   ########.fr       */
+/*   Updated: 2017/10/27 19:58:11 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void			frame_init(t_frame *frame)
 	int		endian;
 
 	frame->redraw = 1;
-	frame->view_point = 0.0;
+	frame->view_point = M_PI / 2.0;
 	frame->mlx = mlx_init();
 	frame->window = mlx_new_window(frame->mlx, WIN_X, WIN_Y, "Wolf3D");
 	frame->image = (int *)mlx_new_image(frame->mlx, WIN_X, WIN_Y);
@@ -54,8 +54,11 @@ void			frame_init(t_frame *frame)
 	frame->keys.e = 0;
 }
 
-int				exit_hook(t_frame *frame)
+int				exit_hook(void *fr_tmp)
 {
+	t_frame		*frame;
+
+	frame = (t_frame *)fr_tmp;
 	wolf_exit(frame, 0);
 	return (0);
 }

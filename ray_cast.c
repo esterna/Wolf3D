@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:52:13 by esterna           #+#    #+#             */
-/*   Updated: 2017/10/27 17:30:36 by esterna          ###   ########.fr       */
+/*   Updated: 2017/10/27 19:56:57 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void				ray_caster(t_frame *frame)
 	frame->redraw = 0;
 	floor_ceil(frame);
 	i = 0;
-	angle = frame->view_point + FOV;
+	angle = frame->view_point + (FOV / 2.0);
 	while (angle > 2.0 * M_PI)
 		angle -= (2.0 * M_PI);
 	rot_ang = FOV / (double)WIN_X;

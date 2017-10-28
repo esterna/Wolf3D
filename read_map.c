@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:49:03 by esterna           #+#    #+#             */
-/*   Updated: 2017/10/27 17:17:48 by esterna          ###   ########.fr       */
+/*   Updated: 2017/10/27 20:00:51 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void			set_curr_pos(t_frame *frame, int x, int y)
 {
-	frame->curr_pos.y = (64.0 * (double)(y - 1)) + 32.0;
-	frame->curr_pos.x = (64.0 * (double)(x - 1)) + 32.0;
+	frame->curr_pos.y = (64.0 * (double)(y)) + 32.0;
+	frame->curr_pos.x = (64.0 * (double)(x)) + 32.0;
 	frame->map[y][x] = 0;
 }
 

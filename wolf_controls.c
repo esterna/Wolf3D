@@ -6,14 +6,17 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 18:25:24 by esterna           #+#    #+#             */
-/*   Updated: 2017/10/27 17:00:11 by esterna          ###   ########.fr       */
+/*   Updated: 2017/10/27 19:24:10 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-int					key_pressed(int keycode, t_frame *frame)
+int					key_pressed(int keycode, void *fr_tmp)
 {
+	t_frame *frame;
+
+	frame = (t_frame *)fr_tmp;
 	if (keycode == 53)
 		wolf_exit(frame, 0);
 	(keycode == 12) ? frame->keys.q = 1 : 0;
@@ -25,8 +28,11 @@ int					key_pressed(int keycode, t_frame *frame)
 	return (0);
 }
 
-int					key_released(int keycode, t_frame *frame)
+int					key_released(int keycode, void *fr_tmp)
 {
+	t_frame *frame;
+
+	frame = (t_frame *)fr_tmp;
 	(keycode == 12) ? frame->keys.q = 0 : 1;
 	(keycode == 14) ? frame->keys.e = 0 : 1;
 	(keycode == 0) ? frame->keys.a = 0 : 1;
